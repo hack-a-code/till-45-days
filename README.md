@@ -1,5 +1,5 @@
 # hack-a-code : till-45-days
-#### an experiment towards **Something COOL** :smiley:
+#### a positive step towards **Something COOL** :smiley:
 
 This repository is created with the aim to achieve something that most of us crave for, `Satisfaction`. Whether you are already occupied with work or just chilling. The rule here is simple. Code & push for each day till 45 days.
 
