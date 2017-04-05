@@ -1,0 +1,25 @@
+{
+    "name": "intranet-system",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "node --harmony ./bin/www",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Rajat Kaushal",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "~1.16.0",
+        "boom": "^4.2.0",
+        "cookie-parser": "~1.4.3",
+        "debug": "~2.6.0",
+        "express": "~4.14.1",
+        "jsonwebtoken": "^7.3.0",
+        "mongoose": "^4.8.3",
+        "morgan": "~1.7.0",
+        "node-sass-middleware": "0.9.8",
+        "pug": "^2.0.0-beta11",
+        "serve-favicon": "~2.3.2"
+    }
+}
