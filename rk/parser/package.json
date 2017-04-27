@@ -1,0 +1,12 @@
+{
+    "name": "parser",
+    "version": "1.0.0",
+    "description": "json parser & code generator for eGovernments microservices",
+    "main": "index.js",
+    "scripts": {
+        "start": "node --harmony index",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "asrajatkaushal",
+    "license": "ISC"
+}
