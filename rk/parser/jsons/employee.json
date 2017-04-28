@@ -87,6 +87,18 @@
 						"maxItems": 100
 					},
 					{
+						"name": "employeestatus",
+						"in": "query",
+						"description": "List of Unique Id of employee status",
+						"required": false,
+						"type": "array",
+						"items": {
+							"type": "integer"
+						},
+						"format": "int64",
+						"maxItems": 10
+					},
+					{
 						"$ref": "#/parameters/pageSize"
 					},
 					{
@@ -2000,4 +2012,4 @@
 			"description": "For getting just the assignment and position information of an employee."
 		}
 	]
-}# Example YAML to get you started quickly.
+}
