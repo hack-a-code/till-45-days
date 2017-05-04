@@ -1,7 +1,7 @@
 const fs = require('fs');
 const onError = require('./on-error');
 
-exports.readDir = function(directory) {
+exports.readDirSync = function(directory) {
     try {
         return fs.readdirSync(directory);
     } catch (err) {
@@ -9,18 +9,18 @@ exports.readDir = function(directory) {
     }
 }
 
-exports.readFiles = function(directory, fileNames) {
-    fileNames.reduce((initObj, fileName) => {
-        var fileNameKey = fileName.substring(0, fileName.length - 3);
-        var fileContent;
-        try {
-            console.log(directory + '/' + fileName);
-            fileContent = fs.readFileSync(directory + '/' + fileName);
-        } catch (err) {
-            onError(err);
-        }
-        initObj[fileNameKey] = fileContent;
-        console.log(fileContent);
-        return initObj;
-    }, {});
+exports.readFileSync = function(file) {
+    try {
+        return fs.readFileSync(file, 'utf8');
+    } catch (err) {
+        onError(err);
+    }
+}
+
+exports.writeFileSync = function(file, data) {
+    try {
+        fs.writeFileSync(file, data, 'utf8');
+    } catch (err) {
+        onError(err);
+    }
 }

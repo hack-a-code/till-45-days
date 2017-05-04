@@ -1,9 +1,21 @@
+const path = require('path');
 const fsOps = require('./utils/fs-ops');
 
-var files = fsOps.readDir('jsons');
-console.log(files);
-var fileContents = fsOps.readFiles('jsons', files);
-console.log(fileContents);
+var directory = 'jsons';
+var files = fsOps.readDirSync(directory);
+var finalObject = files.reduce((initObj, currFile) => {
+    var fileNameKey = path.basename(currFile, path.extname(currFile));
+    var file = directory + '/' + currFile;
+    var fileContent = fsOps.readFileSync(file);
+    initObj[fileNameKey] = JSON.parse(fileContent);
+    return initObj;
+}, {});
+
+files.forEach(fileName => {
+    var file = directory + '/' + fileName;
+    var fileNameKey = path.basename(fileName, path.extname(fileName));
+    fsOps.writeFileSync(file, finalObject[fileNameKey]);
+});
 
 
 
