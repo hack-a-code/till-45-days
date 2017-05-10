@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('./../models/users');
-const pick = require('./../utils/pick');
 
-/* GET users */
+/* Authenticate users */
 router.get('/', function (req, res, next) {
     var userInfoFields = ['_id', 'salutation', 'firstName', 'lastName', 'email', 'username', 'userType'];
     var options = req.query || {};

@@ -11,6 +11,7 @@ var boom = require('boom'); // for getting HTTP-friendly error objects
 var sassMiddleware = require('node-sass-middleware'); // to use SASS CSS preprocessor
 var mongoose = require('mongoose'); // to query mongoDB
 var config = require('./config'); // get our config file
+var compression = require('compression');
 
 var app = express(); // Creates an Express application
 
@@ -58,6 +59,7 @@ var users = require('./routes/users');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(compression()); // use compression to compress every response object (improves performance)
 app.use(morganLogger('dev')); // use morgan to log requests to the console for development use
 app.use(bodyParser.json()); // use bodyParser to parse json content
 app.use(bodyParser.urlencoded({
