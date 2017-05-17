@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Color Palette</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12">
+                    <h3 class="text-center">Palette</h3>
+                    <hr>
+                    <br>
+                    <div id="colorBulletin" class="text-center" style="min-height: 360px; max-height: 360px; overflow: auto;">
+                        <div class="default-text" style="visibility : visible;">
+                            <h4 style="line-height: 45px;">Nothing To Show.</h4>
+                            <h5>Enter the number of colors to generate &amp; click <strong>Generate</strong></h5>
+                        </div>
+                        <div id="colorBulletinText">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <h3>Config Panel</h3>
+                    <hr>
+                    <form id="colorPaletteForm">
+                        <div class="form-group text-center">
+                            <input type="text" class="form-control" id="numberInput" placeholder="# of colors" onkeypress="return checkForEnter(event)">
+                            <br>
+                                <button type="button" class="btn btn-primary" id="generateColors">Generate</button>
+                                <button type="button" class="btn btn-danger" onclick="clearColors()">Clear</button>
+                            <br>
+                            <br>
+                            <h3>Selected:</h3>
+                            <hr>
+                            <div id="colorSelected" style="height: 100px; width: 100px; outline: 2px solid black; margin: 0 auto;"></div>
+                            <br>
+                            <hr>
+                            <p class="text-center ">
+                                <span class="nothing-selected-text" style="display: block;">Nothing Selected</span>
+                                <span class="color-selected-text" style="display: none;"><strong>Hex: </strong><span class="color-value"></span></span>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+        <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+        <script>
+            var enterPressed = false;
+            function checkForEnter(event) {
+                if (event.keyCode == 13) {
+                    generateColors();
+                    enterPressed = true;
+                    return false;
+                } else {
+                    enterPressed = false;
+                }
+            }
+
+            $("#generateColors").click(generateColors);
+
+            function generateColors() {
+                var i;
+                var n = $('#numberInput').val();
+                
+                if(enterPressed != true && n <= 0 || n > 1000 || n == null)
+                    alert("Please enter the number between 0 & 1000");
+
+                else {
+                    var colorArray = [];
+                    for(i = 1; i <= n; i++) {
+                        var newColor = colorGenerator();
+                        if(colorArray.indexOf(newColor) == -1)
+                            colorArray[i] = newColor;
+                        else {
+                            --i;
+                            continue;
+                        }
+                        var newDiv=$('<div></div>');
+                        newDiv.css('background-color', newColor).addClass('colorBox');
+                        newDiv.attr("data-color",newColor);
+                        newDiv.click( function() {
+                            var col = $(this).attr("data-color");
+                            $("#colorSelected").css('background-color', col);
+                            $('.color-value').empty();
+                            $('.color-value').append('<span>' + col + '</span>');
+                            $('.nothing-selected-text').css('display', 'none');
+                            $('.color-selected-text').css('display', 'block');
+                        });
+                        $('.default-text').css('display', 'none');
+                        $('#colorBulletinText').append(newDiv);
+                    }
+                }
+            }
+
+            function colorGenerator() {
+                return ('#' + Math.random().toString(16).slice(2, 8));
+            }
+
+            function clearColors() {
+                $('.nothing-selected-text').css('display', 'block');
+                $('.color-selected-text').css('display', 'none');
+                $('#colorSelected').css('background', 'none');
+                $('.default-text').css('display', 'block');
+                $('#colorBulletinText').empty();
+                document.getElementById("numberInput").value = "";
+            }
+        </script>
+    </body>
+</html>

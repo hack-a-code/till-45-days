@@ -1,0 +1,16 @@
+.colorBox {
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    margin: 2px;
+    opacity: 0.9;
+}
+
+.colorBox:hover, .colorBox:focus, .colorBox:active {
+    border: 2px solid #000;
+    opacity: 1;
+}
+
+.palette-text {
+    display: block;
+}
