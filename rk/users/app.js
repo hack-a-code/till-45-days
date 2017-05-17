@@ -21,6 +21,7 @@ var app = express(); // Creates an Express application
 // ===========================
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.set('superSecret', config.secret);
 
 
 // ===========================
@@ -61,11 +62,11 @@ var users = require('./routes/users');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(compression()); // use compression to compress every response object (improves performance)
 app.use(morganLogger('dev')); // use morgan to log requests to the console for development use
-app.use(bodyParser.json()); // use bodyParser to parse json content
+app.use(bodyParser.json()); // Parse json content from request body
 app.use(bodyParser.urlencoded({
     extended: false
 })); // Parses URL encoded data as plain text & exposes the resulting object (containing keys & values) on req.body
-
+app.use(boom()); // for throwing http friendly error messages
 app.use(cookieParser()); // used to parse cookie data
 app.use(sassMiddleware({
     src: path.join(__dirname, 'public'),
