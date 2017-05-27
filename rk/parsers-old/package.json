@@ -1,0 +1,13 @@
+{
+  "name": "parsers",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "camelcase": "^4.0.0",
+    "mkdirp": "^0.5.1",
+    "pluralize": "^3.1.0"
+  }
+}

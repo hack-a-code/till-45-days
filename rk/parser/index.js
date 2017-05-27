@@ -1,23 +1,28 @@
 const path = require('path');
 const fsOps = require('./utils/fs-ops');
+const yamlToJSON = require('./utils/yaml-to-json');
 
 var inputDirectory = 'jsons';
 var files = fsOps.readDirSync(inputDirectory);
 var finalObject = files.reduce((initObj, currFile) => {
     var fileNameKey = path.basename(currFile, path.extname(currFile));
     var file = inputDirectory + '/' + currFile;
+    yamlToJSON.parseFile(file, printContent);
     var fileContent = fsOps.readFileSync(file);
     initObj[fileNameKey] = JSON.parse(fileContent);
     return initObj;
 }, {});
 
-var outputDirectory = 'output';
-files.forEach(fileName => {
-    var file = outputDirectory + '/' + fileName;
-    var fileNameKey = path.basename(fileName, path.extname(fileName));
-    fsOps.writeFileSync(file, JSON.stringify(finalObject[fileNameKey]));
-});
+// var outputDirectory = 'output';
+// files.forEach(fileName => {
+//     var file = outputDirectory + '/' + fileName;
+//     var fileNameKey = path.basename(fileName, path.extname(fileName));
+//     fsOps.writeFileSync(file, JSON.stringify(finalObject[fileNameKey]));
+// });
 
+function printContent(content) {
+  console.log(content);
+}
 
 
 // const fs = require('fs');

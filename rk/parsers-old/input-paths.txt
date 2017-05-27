@@ -1,0 +1,6 @@
+/home/ibm/rk/hac/till-45-days/rk/parsers-old/resources/swagger-generated/attendance/src/main/java/io/swagger/model/ org/egov/eis /home/ibm/egovernance/workspace/egov-attendance/src/main/java egov-attendance EgovAttendanceApplication
+/home/ibm/rk/hac/till-45-days/rk/parsers-old/resources/swagger-generated/common-masters/src/main/java/io/swagger/model/ org/egov/commons /home/ibm/egovernance/workspace/egov-common-masters/src/main/java egov-common-masters EgovCommonMastersApplication
+/home/ibm/rk/hac/till-45-days/rk/parsers-old/resources/swagger-generated/employee/src/main/java/io/swagger/model/ org/egov/eis /home/ibm/egovernance/workspace/egov-employee/src/main/java egov-employees EgovEmployeeApplication
+/home/ibm/rk/hac/till-45-days/rk/parsers-old/resources/swagger-generated/hr-masters/src/main/java/io/swagger/model/ org/egov/eis /home/ibm/egovernance/workspace/egov-hr-masters/src/main/java egov-hr-masters EgovHRMastersApplication
+/home/ibm/rk/hac/till-45-days/rk/parsers-old/resources/swagger-generated/leave/src/main/java/io/swagger/model/ org/egov/eis /home/ibm/egovernance/workspace/egov-leave/src/main/java egov-leave EgovLeaveApplication
+/home/ibm/rk/hac/till-45-days/rk/parsers-old/resources/swagger-generated/users/src/main/java/io/swagger/model/ org/egov/users /home/ibm/egovernance/workspace/egov-users/src/main/java egov-users EgovUsersApplication
