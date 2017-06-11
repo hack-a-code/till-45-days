@@ -2,28 +2,17 @@ const path = require('path');
 const fsOps = require('./utils/fs-ops');
 const yamlToJSON = require('./utils/yaml-to-json');
 
-var inputDirectory = 'jsons';
+var inputDirectory = 'yamls';
 var files = fsOps.readDirSync(inputDirectory);
+
 var finalObject = files.reduce((initObj, currFile) => {
+    var filePath = inputDirectory + '/' + currFile;
     var fileNameKey = path.basename(currFile, path.extname(currFile));
-    var file = inputDirectory + '/' + currFile;
-    yamlToJSON.parseFile(file, printContent);
-    var fileContent = fsOps.readFileSync(file);
-    initObj[fileNameKey] = JSON.parse(fileContent);
+    initObj[fileNameKey] = yamlToJSON.parseFile(filePath);
     return initObj;
 }, {});
 
-// var outputDirectory = 'output';
-// files.forEach(fileName => {
-//     var file = outputDirectory + '/' + fileName;
-//     var fileNameKey = path.basename(fileName, path.extname(fileName));
-//     fsOps.writeFileSync(file, JSON.stringify(finalObject[fileNameKey]));
-// });
-
-function printContent(content) {
-  console.log(content);
-}
-
+console.log(JSON.stringify(finalObject.User.paths['/_create']));
 
 // const fs = require('fs');
 // const initCaps = require('./utils/init-caps')

@@ -10,6 +10,8 @@
   "author": "asrajatkaushal",
   "license": "ISC",
   "dependencies": {
+    "js-yaml": "^3.8.4",
+    "yaml-to-json": "^0.3.0",
     "yamljs": "^0.2.10"
   }
 }

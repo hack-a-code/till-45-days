@@ -1,0 +1,40 @@
+#%RAML 1.0
+title: User
+version: v1
+baseUri: /users
+
+types:
+  User:
+    properties:
+      id: string,
+      salutation: string,
+      firstName: string,
+      middleName: string,
+      lastName: string,
+      gender: string,
+      dob: date,
+      email: string,
+      altEmail: string,
+      mobileNo: number,
+      altMobileNos: [number],
+      username: string,
+      password: string,
+      userType: string,
+      role: string,
+      isActive: boolean
+
+resourceTypes:
+  User:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<user>>
+
+/search:
+  /:
+    type:  [ User ]
+
+  /{id}:
+    type:  User

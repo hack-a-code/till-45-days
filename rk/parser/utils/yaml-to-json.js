@@ -1,9 +1,9 @@
 const YAML = require('yamljs');
 const onError = require('./on-error');
 
-exports.parseFile = function(file, parsedContent) {
+exports.parseFile = function(file) {
     try {
-        YAML.load(file, parsedContent);
+        return YAML.load(file);
     } catch (err) {
         onError(err);
     }

@@ -1,13 +1,14 @@
 const jwt = require('jsonwebtoken');
+const config = require('./../config');
 
-exports.verifyAuthReq = function (req, res, next) {
-    // check headers or url parameters or post body for token
+var verifyAuthReq = function (req, res, next) {
+    // check headers or query parameters or post body for token
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
     // decode token
     if (token) {
-        // verifies secret and checks exp
-        jwt.verify(token, app.get('superSecret'), function (err, decoded) {
+        // verifies secret and checks expiry
+        jwt.verify(token, config.secret, function (err, decoded) {
             if (err) {
                 return res.boom.unauthorized('invalid token');
             } else {
@@ -18,6 +19,8 @@ exports.verifyAuthReq = function (req, res, next) {
         });
     } else {
         // if there is no token, return an error
-        return res.boom.unauthorized('missing token');
+        return res.boom.unauthorized('missing authentication token');
     }
 }
+
+module.exports.verifyAuthReq = verifyAuthReq;

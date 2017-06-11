@@ -7,7 +7,7 @@ var favicon = require('serve-favicon'); // to serve fevicon logo
 var morganLogger = require('morgan'); // for logging every request on console
 var cookieParser = require('cookie-parser'); // to handle cookies
 var bodyParser = require('body-parser'); // for parsing post request body
-var boom = require('boom'); // for getting HTTP-friendly error objects
+var boom = require('express-boom'); // for getting HTTP-friendly error objects
 var sassMiddleware = require('node-sass-middleware'); // to use SASS CSS preprocessor
 var mongoose = require('mongoose'); // to query mongoDB
 var config = require('./config'); // get our config file
@@ -15,7 +15,7 @@ var compression = require('compression');
 
 var app = express(); // Creates an Express application
 
-
+console.log(boom);
 // ===========================
 // view engine setup =========
 // ===========================
@@ -25,33 +25,12 @@ app.set('superSecret', config.secret);
 
 
 // ===========================
-// db configurations =========
-// ===========================
-
-// Connect to db
-mongoose.connect(config.databaseURL + '/' + config.databaseName);
-
-// Connected handler
-mongoose.connection.on('connected', function(err) {
-    console.log("Connected to DB: " + config.databaseName);
-});
-
-// Error handler
-mongoose.connection.on('error', function(err) {
-    console.log(err);
-});
-
-// Reconnect when closed
-mongoose.connection.on('disconnected', function() {
-    self.connectToDatabase();
-});
-
-
-// ===========================
 // get all route files =======
 // ===========================
 var index = require('./routes/index');
-var users = require('./routes/users');
+var signup = require('./routes/apis/signup');
+var authenticate = require('./routes/apis/authenticate');
+var apis = require('./routes/apis');
 
 
 // ===========================
@@ -81,7 +60,9 @@ app.use(express.static(path.join(__dirname, 'public'))); // used to serve static
 // base api endpoints ========
 // ===========================
 app.use('/', index);
-app.use('/users', users);
+app.use('/signup', signup);
+app.use('/authenticate', authenticate);
+app.use('/api', apis);
 
 
 // ===========================
@@ -108,24 +89,56 @@ app.use(function(err, req, res, next) {
 
 
 // ===========================
-// disconnect db =============
+// db configurations =========
 // ===========================
+
+// Using native (ES6) promise instead of depricated mongoose Promise
+mongoose.Promise = global.Promise;
+
+// Connect to db
+mongoose.connect(config.databaseURL + '/' + config.databaseName);
+
+// Connected handler
+mongoose.connection.on('connected', function(err) {
+    console.log("Connected to DB: " + config.databaseName);
+});
+
+// Error handler
+mongoose.connection.on('error', function(err) {
+    console.log(err);
+});
+
+// Reconnect when closed
+mongoose.connection.on('disconnected', function() {
+    console.log('Mongoose disconnected');
+    mongoose.createConnection(config.databaseURL + '/' + config.databaseName);
+});
+
+// Close the Mongoose connection if node process ends
+process.on('SIGINT', function() {
+    mongoose.connection.close(function () {
+        console.log('Mongoose disconnected since server terminated');
+        process.exit(0);
+    });
+});
+
+// Close the Mongoose connection after responding to the request
 app.use(function(req, res, next) {
-    // action after response
-    var afterResponse = function() {
-        console.log('Closing db connection');
+  // action after response
+  var afterResponse = function() {
+    console.log('Closing db connection');
 
-        // any other clean ups
-        mongoose.connection.close(function() {
-            console.log('Mongoose connection disconnected');
-        });
+    // any other clean ups
+    mongoose.connection.close(function() {
+      console.log('Mongoose connection disconnected');
+    });
 
-        // hooks to execute after response
-        res.on('finish', afterResponse);
-        res.on('close', afterResponse);
+    // hooks to execute after response
+    res.on('finish', afterResponse);
+    res.on('close', afterResponse);
 
-        next();
-    }
+    next();
+  }
 });
 
 module.exports = app;
